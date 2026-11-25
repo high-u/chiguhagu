@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>chiguhagu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./src/style.css">
+  <script type="module" src="./src/main.js"></script>
+</head>
+<body x-data="app">
+
+  <main class="notice" x-show="!started">
+    <h1>chiguhagu</h1>
+    <p>「いつ」「どこで」「誰が」「何を」「どうした」をランダムにつなげて、声でお話しするアプリです。</p>
+
+    <h2>はじめる前に</h2>
+
+    <h3>ダウンロードについて</h3>
+    <p>「開始」を押すと、音声合成に使うモデルや辞書など、合わせて約82MBのデータをダウンロードします。</p>
+    <ul>
+      <li>音声合成モデル（約22MB）：Hugging Face からダウンロードします</li>
+      <li>読みとアクセントを調べる辞書（約44MB）、音声合成に使うプログラム（約16MB）：このサイトからダウンロードします</li>
+    </ul>
+    <p>音声は、お使いのブラウザの中で合成します。</p>
+
+    <h3>文章について</h3>
+    <p>不快な印象を与える表現にならないよう、使用する語句には配慮しています。ただし、文章はランダムに作られるため、意味のちぐはぐな文章や、思いがけない文章になることがあります。</p>
+    <p>ランダムに作られる文章に耐性がない方は、この先に進まないでください。</p>
+    <p>文章の内容は、すべて作り話です。</p>
+
+    <h3>音声の利用について</h3>
+    <p>出力した音声を、次の目的で使用することを禁止します。</p>
+    <ul>
+      <li>人を批判・攻撃すること。「批判・攻撃」の定義は、<a href="https://tyc.rei-yumesaki.net/about/terms/#condition3" target="_blank" rel="noopener">つくよみちゃんキャラクターライセンス</a>に準じます</li>
+      <li>特定の政治的立場・宗教・思想への賛同または反対を呼びかけること</li>
+      <li>刺激の強い表現をゾーニングなしで公開すること</li>
+      <li>他者に対して二次利用を許可する形で公開すること（出力した音声を素材として配布・販売する、出力した音声を用いて新たな音声合成ソフト類を作り他者に使用させるなど、つくよみちゃん（CV.夢前黎）の声質を他者が利用できるようにする行為全般を含みます）</li>
+      <li>音声合成モデル「Tiny Voca Japanese」の<a href="https://huggingface.co/ayousanz/tiny-voca-ja-tsukuyomi-chan/blob/main/LICENSE" target="_blank" rel="noopener">利用条件</a>に違反すること</li>
+    </ul>
+
+    <h2>利用しているもの</h2>
+
+    <h3>音声</h3>
+    <p>本ソフトウェアの音声合成には、フリー素材キャラクター「つくよみちゃん」（© Rei Yumesaki）が無料公開している音声データを使用しています。</p>
+    <p><strong>つくよみちゃんコーパス（CV.夢前黎）</strong><br><a href="https://tyc.rei-yumesaki.net/material/corpus/" target="_blank" rel="noopener">https://tyc.rei-yumesaki.net/material/corpus/</a></p>
+    <p>つくよみちゃんコーパスに由来する部分の取り扱いは、<a href="https://tyc.rei-yumesaki.net/material/corpus/#terms3" target="_blank" rel="noopener">つくよみちゃんコーパスの利用規約</a>に従ってください。<br>このアプリは非公式のもので、公式製品でも公式監修でもありません。</p>
+
+    <h3>音声合成</h3>
+    <ul>
+      <li>モデル：<a href="https://huggingface.co/ayousanz/tiny-voca-ja-tsukuyomi-chan" target="_blank" rel="noopener">Tiny Voca Japanese — つくよみちゃん</a></li>
+      <li>元の実装：<a href="https://github.com/ayutaz/tiny-voca/tree/research/japanese-tts" target="_blank" rel="noopener">tiny-voca</a>（Apache-2.0）</li>
+      <li>読みとアクセントの解析：<a href="https://github.com/jpreprocess/jpreprocess" target="_blank" rel="noopener">jpreprocess</a>（BSD-3-Clause）</li>
+      <li>辞書：naist-jdic（jpreprocess 用。修正BSDライセンスなど）</li>
+      <li>実行環境：<a href="https://www.npmjs.com/package/onnxruntime-web" target="_blank" rel="noopener">ONNX Runtime Web</a>（MIT）</li>
+    </ul>
+
+    <h3>言葉の一覧</h3>
+    <ul>
+      <li>国立国語研究所「<a href="https://mmsrv.ninjal.ac.jp/brfvep/" target="_blank" rel="noopener">教育基本語彙データベース（2009年版B）</a>」（<a href="https://creativecommons.org/licenses/by/4.0/deed.ja" target="_blank" rel="noopener">CC BY 4.0</a>）から語を選び、加工して使用しています</li>
+      <li>東北大学 乾・岡崎研究室「<a href="https://www.cl.ecei.tohoku.ac.jp/Open_Resources-Japanese_Sentiment_Polarity_Dictionary.html" target="_blank" rel="noopener">日本語評価極性辞書</a>」を、ネガティブな言葉を除くために使用しています</li>
+    </ul>
+
+    <p class="go"><button type="button" @click="start">開始</button></p>
+  </main>
+
+  <main class="talk" x-show="started" x-cloak>
+    <div class="head">
+      <p class="sentence" x-text="sentence"></p>
+      <svg class="face" viewBox="0 0 46.315 46.315" aria-hidden="true">
+          <ellipse class="mouth" :style="{ transform: `scaleY(${mouth})` }" cx="23.157" cy="29.327" rx="2.737" ry="1.094"/>
+          <path d="M43.695,20.983c-0.234-2.332-0.752-5.16-1.66-7.157C41.811,13.341,36.518,2.11,23.157,2.11
+          c-3.459,0-6.364,0.744-8.782,1.855c-4.074,1.539-7.213,4.387-9.158,8.258c-0.558,0.914-0.842,1.542-0.887,1.647
+          c-0.888,1.947-1.398,4.736-1.637,7.056C1.063,22.162,0,24.179,0,26.452c0,3.139,2.025,5.787,4.771,6.57
+          c3.479,6.789,10.56,11.183,18.422,11.183c7.867,0,14.955-4.403,18.434-11.206c2.704-0.812,4.688-3.439,4.688-6.547
+          C46.312,24.214,45.283,22.223,43.695,20.983z M39.859,29.259c-0.316,0-0.618-0.074-0.896-0.199
+          c-2.23,6.479-8.44,11.146-15.771,11.146c-7.338,0-13.557-4.679-15.779-11.167c-0.296,0.141-0.618,0.221-0.958,0.221
+          C5.094,29.259,4,28.002,4,26.452c0-1.549,1.094-2.805,2.455-2.805c0.025,0,0.049,0.007,0.075,0.008
+          c0.007-0.862,0.084-1.928,0.222-3.026c0.195,0.009,0.389,0.023,0.588,0.023c3.457,0,7.356-1.395,10.758-3.837
+          c1.751,1.456,4.193,3.066,6.429,3.066h0.627l-0.141-0.611c-0.01-0.039-0.755-3.34-0.923-6.282
+          c1.059,1.273,2.271,2.432,3.615,3.455c3.523,2.68,7.633,4.216,11.273,4.216c0.223,0,0.438-0.014,0.652-0.025
+          c0.137,1.095,0.213,2.154,0.221,3.014c0.004,0,0.006-0.001,0.008-0.001c1.361,0,2.454,1.256,2.454,2.805
+          C42.312,28.002,41.221,29.259,39.859,29.259z"/>
+          <circle cx="15.721" cy="22.613" r="2.416"/>
+          <circle cx="30.592" cy="22.613" r="2.416"/>
+      </svg>
+    </div>
+    <button type="button" :disabled="!ready" @click="speak">何か話して</button>
+  </main>
+
+</body>
+</html>
